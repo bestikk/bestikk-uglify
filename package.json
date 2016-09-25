@@ -1,0 +1,28 @@
+{
+  "name": "bestikk-uglify",
+  "version": "0.1.0",
+  "description": "A simple tool to uglify JavaScript files based on Google Closure Compiler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bestikk/bestikk-uglify.git"
+  },
+  "keywords": [
+    "uglify",
+    "google",
+    "closure",
+    "compiler"
+  ],
+  "author": "Guillaume Grossetie (https://github.com/mogztter)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bestikk/bestikk-uglify/issues"
+  },
+  "homepage": "https://github.com/bestikk/bestikk-uglify#readme",
+  "dependencies": {
+    "bestikk-log": "0.1.0"
+  }
+}
