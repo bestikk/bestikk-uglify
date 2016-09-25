@@ -29,7 +29,7 @@ var Uglify = function() {
 }
 
 Uglify.prototype.minify = function(source, destination, callback) {
-  if (requirementSatisfied) { 
+  if (this.requirementSatisfied) {
     return child_process.exec('java -jar ' + __dirname + '/compiler.jar --warning_level=QUIET --js_output_file=' + destination + ' ' + source, callback);
   }
   log.warn('Requirements are not satisfied (see previous errors), skipping minify task');
