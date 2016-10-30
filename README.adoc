@@ -1,5 +1,9 @@
 # Bestikk Uglify
 
+ifdef::env-github[]
+image:http://img.shields.io/npm/v/bestikk-uglify.svg[npm version, link=https://www.npmjs.org/package/bestikk-uglify]
+endif::[]
+
 A simple tool to uglify JavaScript files based on Google Closure Compiler.
 
 ## Install
