@@ -1,16 +1,26 @@
-var log = require('bestikk-log');
-var fs = require('fs');
-var path = require('path');
-var child_process = require('child_process');
+'use strict';
+const log = require('bestikk-log');
+const fs = require('fs');
+const path = require('path');
+const child_process = require('child_process');
 
-var javaVersionText = function() {
-  var result = child_process.execSync('java -version 2>&1', {encoding: 'utf8'});
-  var firstLine = result.split('\n')[0];
-  var javaVersion = firstLine.match(/"(.*?)"/i)[1];
-  return javaVersion.replace(/\./g, '').replace(/_/g, '');
+const javaVersionText = function () {
+  const result = child_process.execSync('java -version 2>&1', {encoding: 'utf8'});
+  const lines = result.split('\n');
+  let javaVersionLine;
+  for (let line of lines) {
+    if (line.startsWith('java version')) {
+      javaVersionLine = line;
+    }
+  }
+  if (javaVersionLine) {
+    var javaVersion = javaVersionLine.match(/"(.*?)"/i)[1];
+    return javaVersion.replace(/\./g, '').replace(/_/g, '');
+  }
+  throw 'Unable to find the java version in: ' + lines; 
 };
 
-var checkRequirements = function() {
+const checkRequirements = function () {
   // Java7 or higher is available in PATH
   try {
     if (javaVersionText() < '170') {
@@ -18,17 +28,18 @@ var checkRequirements = function() {
       return false;
     }
   } catch (e) {
+    log.error('e' + e);
     log.error('\'java\' binary is not available in PATH');
     return false;
   }
   return true;
 };
 
-var Uglify = function() {
+const Uglify = function() {
   this.requirementSatisfied = checkRequirements();
 }
 
-Uglify.prototype.minify = function(source, destination, callback) {
+Uglify.prototype.minify = function (source, destination, callback) {
   if (this.requirementSatisfied) {
     return child_process.exec('java -jar ' + __dirname + '/compiler.jar --warning_level=QUIET --js_output_file=' + destination + ' ' + source, callback);
   }

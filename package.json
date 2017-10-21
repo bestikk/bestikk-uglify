@@ -3,8 +3,13 @@
   "version": "0.1.1",
   "description": "A simple tool to uglify JavaScript files based on Google Closure Compiler",
   "main": "index.js",
+  "engines": {
+    "node": ">=4",
+    "npm": ">=3.0.0",
+    "yarn": ">=1.1.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node spec/smoke.js"
   },
   "repository": {
     "type": "git",
