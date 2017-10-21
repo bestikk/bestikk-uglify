@@ -28,7 +28,7 @@ const checkRequirements = function () {
       return false;
     }
   } catch (e) {
-    log.error('e' + e);
+    log.error('error: ' + e);
     log.error('\'java\' binary is not available in PATH');
     return false;
   }
