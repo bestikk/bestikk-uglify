@@ -9,7 +9,7 @@ const javaVersionText = function () {
   const lines = result.split('\n');
   let javaVersionLine;
   for (let line of lines) {
-    if (line.startsWith('java version')) {
+    if (line.startsWith('java version') || line.startsWith('openjdk version')) {
       javaVersionLine = line;
     }
   }
