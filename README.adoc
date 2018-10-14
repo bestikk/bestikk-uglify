@@ -16,9 +16,9 @@ A simple tool to uglify JavaScript files based on Google Closure Compiler.
 IMPORTANT: Google Closure Compiler requires Java 7 or higher and `java` binary must be available in your `PATH`.
 
 ```javascript
-var uglify = require('bestikk-uglify');
+var uglify = require('bestikk-uglify')
 
-uglify.minify('index.js', 'index.min.js');
-uglify.minify('index.js', 'index.min.js', callback); // <1>
+uglify.minify('index.js', 'index.min.js')
+  .then(() => /* do something * /) // <1>
 ```
-<1> `minify` function has an optional `callback` argument.
+<1> `minify` function returns a `Promise`.
