@@ -9,6 +9,8 @@
     "yarn": ">=1.1.0"
   },
   "scripts": {
+    "lint": "standard",
+    "lint:fix": "standard --fix",
     "test": "node spec/smoke.js"
   },
   "repository": {
@@ -29,5 +31,13 @@
   "homepage": "https://github.com/bestikk/bestikk-uglify#readme",
   "dependencies": {
     "bestikk-log": "0.1.0"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ]
   }
 }
