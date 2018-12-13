@@ -1,6 +1,6 @@
 {
   "name": "bestikk-uglify",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simple tool to uglify JavaScript files based on Google Closure Compiler",
   "main": "index.js",
   "engines": {
