@@ -40,11 +40,11 @@ const extractJavaSemanticVersion = function (input) {
 }
 
 const checkRequirements = function () {
-  // Java7 or higher must be available in PATH
+  // Java 8 or higher must be available in PATH
   try {
     let semanticVersion = javaSemanticVersion()
-    if (semanticVersion.major < 7) {
-      log.error('Closure Compiler requires Java7 or higher')
+    if (semanticVersion.major < 8) {
+      log.error('Closure Compiler requires Java 8 or higher')
       return false
     }
   } catch (e) {
