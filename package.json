@@ -4,10 +4,12 @@
   "description": "A simple tool to uglify JavaScript files based on Google Closure Compiler",
   "main": "index.js",
   "engines": {
-    "node": ">=4",
-    "npm": ">=3.0.0",
-    "yarn": ">=1.1.0"
+    "node": ">=8.1",
+    "npm": ">=6"
   },
+  "files": [
+    "closure-compiler-v20181125.jar"
+  ],
   "scripts": {
     "lint": "standard",
     "lint:fix": "standard --fix",
