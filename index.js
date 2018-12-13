@@ -3,7 +3,7 @@ const log = require('bestikk-log')
 const childProcess = require('child_process')
 
 const javaSemanticVersion = function () {
-  const result = childProcess.execSync('java -version 2>&1', {encoding: 'utf8'})
+  const result = childProcess.execSync('java -version 2>&1', { encoding: 'utf8' })
   return extractJavaSemanticVersion(result)
 }
 
@@ -78,4 +78,3 @@ Uglify.prototype.minify = function (source, destination) {
 
 module.exports = new Uglify()
 module.exports._extractJavaSemanticVersion = extractJavaSemanticVersion
-
