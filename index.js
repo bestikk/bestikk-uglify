@@ -2,9 +2,13 @@
 const log = require('bestikk-log')
 const childProcess = require('child_process')
 
-const javaVersionText = function () {
-  const result = childProcess.execSync('java -version 2>&1', { encoding: 'utf8' })
-  const lines = result.split('\n')
+const javaSemanticVersion = function () {
+  const result = childProcess.execSync('java -version 2>&1', {encoding: 'utf8'})
+  return extractJavaSemanticVersion(result)
+}
+
+const extractJavaSemanticVersion = function (input) {
+  const lines = input.split('\n')
   let javaVersionLine
   for (let line of lines) {
     if (line.startsWith('java version') || line.startsWith('openjdk version')) {
@@ -13,15 +17,33 @@ const javaVersionText = function () {
   }
   if (javaVersionLine) {
     const javaVersion = javaVersionLine.match(/"(.*?)"/i)[1]
-    return javaVersion.replace(/\./g, '').replace(/_/g, '')
+    const semanticVersion = javaVersion.match(/([0-9]+)\.([0-9]+)\.([0-9]+)(_.*)?/i)
+    const major = parseInt(semanticVersion[1])
+    const minor = parseInt(semanticVersion[2])
+    const patch = parseInt(semanticVersion[3])
+    const meta = semanticVersion[4]
+    if (major === 1) {
+      return {
+        major: minor,
+        minor: patch,
+        patch: parseInt(meta.replace(/_/g, ''))
+      }
+    } else {
+      return {
+        major,
+        minor,
+        patch
+      }
+    }
   }
   throw new Error('Unable to find the java version in: ' + lines)
 }
 
 const checkRequirements = function () {
-  // Java7 or higher is available in PATH
+  // Java7 or higher must be available in PATH
   try {
-    if (javaVersionText() < '170') {
+    let semanticVersion = javaSemanticVersion()
+    if (semanticVersion.major < 7) {
       log.error('Closure Compiler requires Java7 or higher')
       return false
     }
@@ -35,12 +57,13 @@ const checkRequirements = function () {
 
 const Uglify = function () {
   this.requirementSatisfied = checkRequirements()
+  this.compilerJar = 'closure-compiler-v20181125.jar'
 }
 
 Uglify.prototype.minify = function (source, destination) {
   if (this.requirementSatisfied) {
     return new Promise((resolve, reject) => {
-      childProcess.exec(`java -jar ${__dirname}/compiler.jar --warning_level=QUIET --js_output_file=${destination} ${source}`, error => {
+      childProcess.exec(`java -jar ${__dirname}/${this.compilerJar} --warning_level=QUIET --js_output_file=${destination} ${source}`, error => {
         if (error) {
           log.error('error: ' + error)
           return reject(error)
@@ -54,3 +77,5 @@ Uglify.prototype.minify = function (source, destination) {
 }
 
 module.exports = new Uglify()
+module.exports._extractJavaSemanticVersion = extractJavaSemanticVersion
+
