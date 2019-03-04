@@ -55,26 +55,29 @@ const checkRequirements = function () {
   return true
 }
 
-const Uglify = function () {
-  this.requirementSatisfied = checkRequirements()
-  this.compilerJar = 'closure-compiler-v20190215.jar'
-}
-
-Uglify.prototype.minify = function (source, destination) {
-  if (this.requirementSatisfied) {
-    return new Promise((resolve, reject) => {
-      childProcess.exec(`java -jar ${__dirname}/${this.compilerJar} --warning_level=QUIET --js_output_file=${destination} ${source}`, error => {
-        if (error) {
-          log.error('error: ' + error)
-          return reject(error)
-        }
-        return resolve({})
-      })
-    })
+class Uglify {
+  constructor (args) {
+    this.requirementSatisfied = checkRequirements()
+    this.compilerJar = 'closure-compiler-v20190215.jar'
+    this.args = args || ['--warning_level=QUIET']
   }
-  log.warn('Requirements are not satisfied (see previous errors), skipping minify task')
-  return Promise.resolve({})
+
+  async minify (source, destination) {
+    if (this.requirementSatisfied) {
+      return new Promise((resolve, reject) => {
+        childProcess.exec(`java -jar ${__dirname}/${this.compilerJar} ${this.args.join(' ')} --js_output_file=${destination} ${source}`, error => {
+          if (error) {
+            log.error('error: ' + error)
+            return reject(error)
+          }
+          return resolve({})
+        })
+      })
+    }
+    log.warn('Requirements are not satisfied (see previous errors), skipping minify task')
+    return {}
+  }
 }
 
-module.exports = new Uglify()
+module.exports = Uglify
 module.exports._extractJavaSemanticVersion = extractJavaSemanticVersion
