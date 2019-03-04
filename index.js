@@ -57,7 +57,7 @@ const checkRequirements = function () {
 
 const Uglify = function () {
   this.requirementSatisfied = checkRequirements()
-  this.compilerJar = 'closure-compiler-v20181125.jar'
+  this.compilerJar = 'closure-compiler-v20190215.jar'
 }
 
 Uglify.prototype.minify = function (source, destination) {
