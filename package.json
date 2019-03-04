@@ -8,7 +8,7 @@
     "npm": ">=6"
   },
   "files": [
-    "closure-compiler-v20181125.jar"
+    "closure-compiler-v20190215.jar"
   ],
   "scripts": {
     "lint": "standard",
