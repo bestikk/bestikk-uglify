@@ -4,7 +4,7 @@
   "description": "A simple tool to uglify JavaScript files based on Google Closure Compiler",
   "main": "index.js",
   "engines": {
-    "node": ">=8.1",
+    "node": ">=8.11",
     "npm": ">=6"
   },
   "files": [
