@@ -1,7 +1,7 @@
 # Bestikk Uglify
 
 ifdef::env-github[]
-image:http://img.shields.io/travis/bestikk/bestikk-uglify.svg[Travis build status, link=https://travis-ci.org/bestikk/bestikk-uglify]
+image:https://github.com/bestikk/bestikk-uglify/actions/workflows/ci.yml/badge.svg[Build status, link=https://github.com/bestikk/bestikk-uglify/actions/workflows/ci.yml]
 image:http://img.shields.io/npm/v/bestikk-uglify.svg[npm version, link=https://www.npmjs.org/package/bestikk-uglify]
 endif::[]
 
