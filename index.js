@@ -17,11 +17,15 @@ const extractJavaSemanticVersion = function (input) {
   }
   if (javaVersionLine) {
     const javaVersion = javaVersionLine.match(/"(.*?)"/i)[1]
-    const semanticVersion = javaVersion.match(/(\d+\.)?(\d+\.)?(\*|\d+)/i)
+    let semanticVersion
+    if(javaVersion.indexOf(".") == -1) { // Check if version is formatted as number
+      semanticVersion = [null, javaVersion, 0, 0]
+    } else {
+      semanticVersion = javaVersion.match(/([0-9]+)\.([0-9]+)\.([0-9]+)(_.*)?/i)
+    }
     const major = parseInt(semanticVersion[1])
     const minor = parseInt(semanticVersion[2])
     const patch = parseInt(semanticVersion[3])
-    const meta = semanticVersion[4]
     if (major === 1) {
       return {
         major: minor,
