@@ -17,7 +17,7 @@ const extractJavaSemanticVersion = function (input) {
   }
   if (javaVersionLine) {
     const javaVersion = javaVersionLine.match(/"(.*?)"/i)[1]
-    const semanticVersion = javaVersion.match(/([0-9]+)(_.*)?/i)
+    const semanticVersion = javaVersion.match(/(\d+\.)?(\d+\.)?(\*|\d+)/i)
     const major = parseInt(semanticVersion[1])
     const minor = parseInt(semanticVersion[2])
     const patch = parseInt(semanticVersion[3])
