@@ -10,7 +10,7 @@ const javaSemanticVersion = function () {
 const extractJavaSemanticVersion = function (input) {
   const lines = input.split('\n')
   let javaVersionLine
-  for (let line of lines) {
+  for (const line of lines) {
     if (line.startsWith('java version') || line.startsWith('openjdk version')) {
       javaVersionLine = line
     }
@@ -18,7 +18,7 @@ const extractJavaSemanticVersion = function (input) {
   if (javaVersionLine) {
     const javaVersion = javaVersionLine.match(/"(.*?)"/i)[1]
     let semanticVersion
-    if(javaVersion.indexOf(".") == -1) { // Check if version is formatted as number
+    if (javaVersion.indexOf('.') === -1) { // Check if version is formatted as number
       semanticVersion = [null, javaVersion, 0, 0]
     } else {
       semanticVersion = javaVersion.match(/([0-9]+)\.([0-9]+)\.([0-9]+)(_.*)?/i)
@@ -26,6 +26,7 @@ const extractJavaSemanticVersion = function (input) {
     const major = parseInt(semanticVersion[1])
     const minor = parseInt(semanticVersion[2])
     const patch = parseInt(semanticVersion[3])
+    const meta = semanticVersion[4]
     if (major === 1) {
       return {
         major: minor,
@@ -46,7 +47,7 @@ const extractJavaSemanticVersion = function (input) {
 const checkRequirements = function () {
   // Java 8 or higher must be available in PATH
   try {
-    let semanticVersion = javaSemanticVersion()
+    const semanticVersion = javaSemanticVersion()
     if (semanticVersion.major < 8) {
       log.error('Closure Compiler requires Java 8 or higher')
       return false
@@ -69,6 +70,7 @@ class Uglify {
   async minify (source, destination) {
     if (this.requirementSatisfied) {
       return new Promise((resolve, reject) => {
+        // eslint-disable-next-line n/no-path-concat
         childProcess.exec(`java -jar ${__dirname}/${this.compilerJar} ${this.args.join(' ')} --js_output_file=${destination} ${source}`, error => {
           if (error) {
             log.error('error: ' + error)
